@@ -22,13 +22,17 @@
     "@babel/core": "^7.12.3",
     "@babel/node": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
+    "@feathersjs/express": "^4.5.9",
     "body-parser": "^1.19.0",
     "cloudinary": "^1.23.0",
+    "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.10.11",
     "multer": "^1.4.2",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "passport": "^0.4.1",
+    "passport-google-oauth20": "^2.0.0"
   }
 }
