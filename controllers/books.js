@@ -1,9 +1,21 @@
+import fs from 'fs'
+
 import validateBook from '../utils/validations'
 import Book from '../models/Book'
+import uploads from '../utils/cloudinary'
 
 const addBook = async (req, res) => {
     try {
         const { name, author } = req.body
+        let url
+        const uploader = async (path) => await uploads(path, 'Images')
+        console.log('IMAGESSSSS', req.file)
+        if(req.method === 'POST'){
+            const { path } = req.file
+            const newPath = await uploader(path)
+            url = newPath
+            fs.unlinkSync(path)
+        }
 
         const { valid, errors } = validateBook(name, author)
         if(!valid) {
@@ -16,6 +28,7 @@ const addBook = async (req, res) => {
         const book = new Book({
             name,
             author,
+            image: url,
             createdAt: new Date().toISOString()
         })
 
@@ -33,4 +46,13 @@ const addBook = async (req, res) => {
     
 }
 
-export default addBook
+const getAllBooks = async (req, res) => {
+    const books = await Book.find()
+
+    return res.status(200).json({
+        status: 200,
+        data: books
+    })
+}
+
+export { addBook, getAllBooks }
