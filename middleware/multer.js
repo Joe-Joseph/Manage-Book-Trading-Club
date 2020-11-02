@@ -1,5 +1,6 @@
 import multer from 'multer';
 import path from 'path'
+import uploads from '../utils/cloudinary';
 
 // specify the storage engine
 
@@ -25,7 +26,7 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({
     storage,
-    limits: { fileSize: 1024 * 1024 },
+    limits: { fileSize: 2048 * 2048 },
     fileFilter
 })
 

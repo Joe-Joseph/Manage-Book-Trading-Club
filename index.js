@@ -1,26 +1,16 @@
 import express from 'express'
 import bodyParser from 'body-parser'
-import passport from 'passport'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
-import cookieSession from 'cookie-session'
 
 import booksRouter from './routes/books'
 import userRouter from './routes/user'
-const passportSetup = require('./utils/passportSetup');
+import requestsRouter from './routes/requests'
 
 dotenv.config()
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-
-app.use(cookieSession({
-    maxAge: 24 * 60 * 60 * 1000,
-    keys: [process.env.COOKIE_SESSION_KEY]
-}));
-
-app.use(passport.initialize());
-app.use(passport.session());
 
 const PORT = process.env.PORT || 8000
 
@@ -39,6 +29,7 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 })
 
 app.use('/api/books', booksRouter)
-app.use('/', userRouter)
+app.use('/api/user', userRouter)
+app.use('/api/requests', requestsRouter)
 
 export default app;
