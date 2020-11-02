@@ -1,8 +1,11 @@
 import { model, Schema } from 'mongoose'
 
 const userSchema = new Schema({
+    firstName: String,
+    lastName: String,
     username: String,
-    googleId: String
+    password: String,
+    city: String
 });
 
 const User = model('user', userSchema);

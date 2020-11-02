@@ -4,6 +4,7 @@ const bookSchema = new Schema({
     name: String,
     author: String,
     image: Object,
+    userId: String,
     createdAt: String
 })
 
