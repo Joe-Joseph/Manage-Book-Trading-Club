@@ -28,8 +28,6 @@ const addBook = async (req, res) => {
             const { name, author } = req.body
             const { userId } = req.user
 
-            console.log('USER HANO HHH', req.user);
-
             const { valid, errors } = validateBook(name, author)
             if(!valid) {
                 return res.status(400).json({
@@ -83,4 +81,33 @@ const getAllBooks = async (req, res) => {
     }
 }
 
-export { addBook, getAllBooks }
+const getBooksForUser = async (req, res) => {
+    try {
+        const { userId } = req.user
+
+        const books = await Book.find({ userId })
+
+        if(books.length < 1) {
+            return res.status(404).json({
+                status: 404,
+                error: 'No book found'
+            })
+        }
+
+        return res.status(200).json({
+            status: 200,
+            data: books
+        })
+    } catch (err) {
+        return res.status(500).json({
+            status: 500,
+            error: err
+        })
+    }
+}
+
+export {
+    addBook,
+    getAllBooks,
+    getBooksForUser
+}
