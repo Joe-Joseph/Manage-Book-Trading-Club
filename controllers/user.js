@@ -126,4 +126,67 @@ const loginUser = async (req, res) => {
     }
 }
 
-export { createUser, loginUser }
+const getAllUsers = async (req, res) => {
+    try {
+        const users = await User.find()
+        if(!users || users.length < 1){
+            res.status(404).json({
+                status: 404,
+                error: 'No user found'
+            })
+        }
+        res.status(200).json({
+            status: 200,
+            data: users
+        })
+    } catch (err) {
+        res.status(500).json({
+            status: 500,
+            error: 'Server error'
+        })
+    }
+}
+
+const modifyUser = async(req, res) => {
+    try {
+        const user = await User.findById(req.params.id)
+        if(!user) {
+            res.status(404).json({
+                status: 404,
+                error: 'User not found'
+            })
+        }
+
+        await User.findOneAndUpdate(
+            { _id: req.params.id },
+            req.body,
+            {useFindAndModify: false},
+            (error, doc) => {
+            if(error) {
+                return res.status(500).json({
+                    status: 500,
+                    error: 'Something went wrong'
+                })
+            }
+            if(doc){
+                return res.status(200).json({
+                    status: 200,
+                    message: 'User updated successfully',
+                    data: doc
+                })
+            }
+        })
+    } catch (err) {
+        res.status(500).json({
+            status: 500,
+            error: err
+        })
+    }
+}
+
+export {
+    createUser,
+    loginUser,
+    getAllUsers,
+    modifyUser
+}

@@ -36,4 +36,26 @@ const createRequest = async (req, res) => {
 
 }
 
-export { createRequest }
+const getAllRequests = async(req, res) => {
+    try {
+        const allRequest = await Request.find()
+        if(!allRequest || allRequest.length < 1){
+            return res.status(404).json({
+                status: 404,
+                error: 'No request found'
+            })
+        }
+
+        return res.status(200).json({
+            status: 200,
+            data: allRequest
+        })
+    } catch (err) {
+        return res.status(500).json({
+            status: 500,
+            error: 'Server error'
+        })
+    }
+}
+
+export { createRequest, getAllRequests }

@@ -29,7 +29,7 @@ mongoose.connect(process.env.MONGODB, { useNewUrlParser: true, useUnifiedTopolog
 })
 
 app.use('/api/books', booksRouter)
-app.use('/api/user', userRouter)
+app.use('/api/users', userRouter)
 app.use('/api/requests', requestsRouter)
 
 export default app;
