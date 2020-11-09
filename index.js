@@ -2,6 +2,7 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import dotenv from 'dotenv'
+import cors from 'cors'
 
 import booksRouter from './routes/books'
 import userRouter from './routes/user'
@@ -11,6 +12,7 @@ dotenv.config()
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(cors())
 
 const PORT = process.env.PORT || 8000
 

@@ -1,7 +1,6 @@
 import express from 'express'
 
-import { addBook, getAllBooks, getBooksForUser } from '../controllers/books'
-// import multer from '../middleware/multer'
+import { addBook, getAllBooks, getBooksForUser, getOneBook } from '../controllers/books'
 import isLoggedIn from '../middleware/auth'
 
 const router = express.Router()
@@ -11,5 +10,6 @@ router.route('/')
     .get(getAllBooks)
 
 router.get('/user', isLoggedIn, getBooksForUser)
+router.get('/:id', getOneBook)
 
 export default router

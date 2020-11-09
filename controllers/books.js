@@ -35,6 +35,7 @@ const addBook = async (req, res) => {
                     error: errors
                 })
             }
+            console.log('Image url', url)
             const book = new Book({
                 name,
                 author,
@@ -81,6 +82,28 @@ const getAllBooks = async (req, res) => {
     }
 }
 
+const getOneBook = async(req, res) => {
+    try{
+        const book = await Book.findById(req.params.id)
+        if(!book) {
+            return res.status(404).json({
+                status: 404,
+                error: 'No Book found'
+            })
+        }
+
+        return res.status(200).json({
+            status: 200,
+            data: book
+        })
+    }catch {
+        return res.status(500).json({
+            status: 500,
+            error: 'Server error'
+        })
+    }
+}
+
 const getBooksForUser = async (req, res) => {
     try {
         const { userId } = req.user
@@ -109,5 +132,6 @@ const getBooksForUser = async (req, res) => {
 export {
     addBook,
     getAllBooks,
-    getBooksForUser
+    getBooksForUser,
+    getOneBook
 }
