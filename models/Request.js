@@ -1,8 +1,9 @@
 import { model, Schema } from 'mongoose'
 
+
 const requestSchema = new Schema({
-    booksToGive: [{ bookId: String }],
-    booksToReceive: [{ bookId: String }],
+    booksToGive: Array,
+    booksToReceive: Array,
     userId: String,
     status: String,
     createdAt: String

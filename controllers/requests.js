@@ -1,5 +1,7 @@
 import Request from '../models/Request'
 import { validateRequest } from '../utils/validations'
+import { getBooks } from '../utils/getBooks'
+
 
 const createRequest = async (req, res) => {
     try{
@@ -14,9 +16,12 @@ const createRequest = async (req, res) => {
             })
         }
 
+        const getBooksToGive = await getBooks(booksToGive)
+        const getBooksToReceive = await getBooks(booksToReceive)
+
         const request = new Request({
-            booksToGive,
-            booksToReceive,
+            booksToGive: getBooksToGive,
+            booksToReceive: getBooksToReceive,
             userId,
             status: 'Pending'
         })
