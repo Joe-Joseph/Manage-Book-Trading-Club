@@ -147,9 +147,35 @@ const getAllUsers = async (req, res) => {
     }
 }
 
+const getUserProfile = async (req, res) => {
+    try{
+        const { userId } = req.user
+        const user = await User.findById(userId)
+
+        if(!user) {
+            return status(404).json({
+                status: 404,
+                error: 'User not found'
+            })
+        }
+
+        return res.status(200).json({
+            status: 200,
+            data: user
+        })
+    }catch(err) {
+        console.log('Error!!!!', err)
+        res.status(500).json({
+            status: 500,
+            error: 'Server error'
+        })
+    }
+}
+
 const modifyUser = async(req, res) => {
     try {
-        const user = await User.findById(req.params.id)
+        const { userId } = req.user
+        const user = await User.findById(userId)
         if(!user) {
             res.status(404).json({
                 status: 404,
@@ -158,7 +184,7 @@ const modifyUser = async(req, res) => {
         }
 
         await User.findOneAndUpdate(
-            { _id: req.params.id },
+            { _id: userId },
             req.body,
             {useFindAndModify: false},
             (error, doc) => {
@@ -188,5 +214,6 @@ export {
     createUser,
     loginUser,
     getAllUsers,
-    modifyUser
+    modifyUser,
+    getUserProfile
 }

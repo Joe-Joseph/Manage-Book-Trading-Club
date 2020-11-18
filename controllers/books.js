@@ -7,35 +7,8 @@ import multer from '../middleware/multer'
 
 const addBook = async (req, res) => {
     try {
-        // const uploadImage = multer.single('image')
-
-        // uploadImage(req, res, async (err) => {
-        //     if (err) {
-        //         // A Multer error occurred when uploading.
-        //         return res.status(400).json({
-        //             status: 400,
-        //             error: err.message
-        //         })
-        //     } 
-        //     // Everything went fine.
-        //     const uploader = async (path) => await uploads(path, 'Images')
-
-        //     const { path } = req.file
-        //     const newPath = await uploader(path)
-        //     const url = newPath
-        //     fs.unlinkSync(path)
-
         const { name, author, image } = req.body
         const { userId } = req.user
-
-        //     const { valid, errors } = validateBook(name, author)
-        //     if(!valid) {
-        //         return res.status(400).json({
-        //             status: 400,
-        //             error: errors
-        //         })
-        //     }
-        //     console.log('Image url', url)
         const book = new Book({
             name,
             author,
