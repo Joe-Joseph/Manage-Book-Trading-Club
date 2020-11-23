@@ -3,14 +3,17 @@ import {
     createUser,
     loginUser,
     getAllUsers,
-    modifyUser
+    modifyUser,
+    getUserProfile
 } from '../controllers/user'
+import isLoggedIn from '../middleware/auth'
 
 const router = express.Router()
 
 router.post('/signup', createUser)
 router.post('/login', loginUser)
 router.get('/', getAllUsers)
-router.put('/:id', modifyUser)
+router.get('/profile', isLoggedIn, getUserProfile)
+router.put('/profile', isLoggedIn, modifyUser)
 
 export default router;
